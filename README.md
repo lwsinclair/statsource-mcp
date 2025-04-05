@@ -70,28 +70,21 @@ mcp-server-stats
 
 ## Docker Support
 
-To use the Docker option mentioned in the configuration section, you'll need to build and publish the Docker image first:
+A pre-built Docker image is available on Docker Hub, which simplifies running the server. You can use this image directly without needing to build it yourself.
 
-### Building the Docker image locally
-
-```bash
-docker build -t statsource/mcp .
-```
-
-### Running the Docker image locally
+Pull the image (optional, as `docker run` will do this automatically if the image isn't present locally):
 
 ```bash
-docker run -i --rm statsource/mcp
+docker pull jamie78933/statsource-mcp
 ```
 
-### Publishing to Docker Hub
-
-If you want to make the image available for everyone:
+To run the server using the Docker image:
 
 ```bash
-docker login
-docker push statsource/mcp
+docker run -i --rm jamie78933/statsource-mcp
 ```
+
+Note: For actual usage within applications like Claude.app, refer to the Configuration section below for passing necessary environment variables like API keys and database connection strings.
 
 ## Configuration
 
@@ -113,10 +106,24 @@ Add to your Claude settings:
 **Using docker**
 
 ```json
-"mcpServers": {
-  "statsource": {
-    "command": "docker",
-    "args": ["run", "-i", "--rm", "jamie78933/statsource-mcp"]
+{
+  "mcpServers": {
+    "statsource": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "API_KEY=YOUR_STATSOURCE_API_KEY",
+        "-e",
+        "DB_CONNECTION_STRING=postgresql://your_db_user:your_db_password@your_db_host:5432/your_db_name",
+        "-e",
+        "DB_SOURCE_TYPE=database",
+        "jamie78933/statsource-mcp"
+      ],
+      "protocolVersion": "2024-11-05"
+    }
   }
 }
 ```
