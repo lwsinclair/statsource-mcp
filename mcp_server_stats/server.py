@@ -427,6 +427,8 @@ def predict_trends(
     - columns must be provided as a proper list, typically containing the single numeric column to predict:
       CORRECT: columns=["sales_amount"]
       INCORRECT: columns="[\"sales_amount\"]"
+    - periods must be an integer between 1 and 12. The API has a MAXIMUM LIMIT OF 12 PERIODS for predictions.
+      Any request with periods > 12 will fail. Always inform users of this limitation if they request more periods.
 
     ### CRITICAL: Column Name Formatting & Case-Insensitivity
     - **Column Matching:** The API matches column names case-insensitively. You can specify "revenue" even if the data has "Revenue". Ask the user for the intended column names.
@@ -441,7 +443,7 @@ def predict_trends(
       3. Correct data_source provided (filename, connection string, or API URL).
       4. table_name provided if source_type is "database".
       5. API URL is correct and returns valid JSON if source_type is "api".
-      6. `periods` parameter is provided and is a positive integer.
+      6. `periods` parameter is provided and is a positive integer not exceeding 12.
       7. `date_column` is specified if required for the underlying model.
 
     ### When to use this tool:
@@ -451,7 +453,7 @@ def predict_trends(
 
     ### Required inputs:
     - columns: List containing the name of the (usually single) numeric column to predict trends for.
-    - periods: Number of future periods to predict.
+    - periods: Number of future periods to predict (maximum: 12).
 
     ### Optional inputs:
     - data_source: Identifier for the data source.
@@ -481,7 +483,7 @@ def predict_trends(
       * 'daily': Uses daily data. Choose only if the user needs very granular forecasts and understands the potential for noise. Requires sufficient daily data points.
 
     ### ML Prediction features returned:
-    - Time series forecasting with customizable prediction periods.
+    - Time series forecasting with customizable prediction periods (up to 12 periods maximum).
     - Trend direction analysis ("increasing", "decreasing", "stable").
     - Model quality metrics (r-squared, slope).
     - Works with numeric data columns from any supported data source.
