@@ -299,7 +299,10 @@ def calculate_statistics(
     - ALWAYS ask the user explicitly for all required information.
     - For CSV files: The user MUST first upload their file to statsource.me, then provide the filename.
     - For database connections: Ask the user for their exact connection string (e.g., "postgresql://user:pass@host/db"). DO NOT GUESS OR MODIFY IT.
-    - For database sources: You MUST provide the table_name parameter with the exact table name.
+    - For database sources: You MUST ask for and provide the table_name parameter with the exact table name.
+      * When a user specifies a database source, ALWAYS EXPLICITLY ASK: "Which table in your database contains this data?"
+      * Do not proceed without obtaining the table name for database sources.
+      * Tool calls without table_name will FAIL for database sources.
     - For API sources: Ask the user for the exact API endpoint URL that returns JSON data.
     - Never suggest default values, sample data, or example parameters - request specific information from the user.
     - If the user has configured a default database connection in their MCP config, inform them it will be used if they don't specify a data source.
@@ -346,6 +349,7 @@ def calculate_statistics(
     - table_name: Name of the database table to use (REQUIRED for database sources).
       * Must be provided when source_type is 'database'.
       * Ask user for the exact table name in their database.
+      * Always explicitly ask for table name when data source is a database.
     - filters: Dictionary of column-value pairs to filter data *before* analysis.
       * Format: {"column_name": "value"} or {"column_name": ["val1", "val2"]}
       * **API Source Behavior:** For 'api' sources, data is fetched *first*, then filters are applied to the resulting data.
@@ -417,7 +421,10 @@ def predict_trends(
     - ALWAYS ask the user explicitly for all required information.
     - For CSV files: The user MUST first upload their file to statsource.me, then provide the filename.
     - For database connections: Ask the user for their exact connection string (e.g., "postgresql://user:pass@host/db"). DO NOT GUESS OR MODIFY IT.
-    - For database sources: You MUST provide the table_name parameter with the exact table name.
+    - For database sources: You MUST ask for and provide the table_name parameter with the exact table name.
+      * When a user mentions their data is in a database, ALWAYS EXPLICITLY ASK: "Which table in your database contains this data?"
+      * Tool calls without table_name will FAIL for database sources.
+      * The table_name question should be asked together with other required information (column names, periods).
     - For API sources: Ask the user for the exact API endpoint URL that returns JSON data.
     - Never suggest default values, sample data, or example parameters - request specific information from the user.
     - If the user has configured a default database connection in their MCP config, inform them it will be used if they don't specify a data source.
@@ -467,6 +474,7 @@ def predict_trends(
     - table_name: Name of the database table to use (REQUIRED for database sources).
       * Must be provided when source_type is 'database'.
       * Ask user for the exact table name in their database.
+      * ALWAYS ask for table name when using database sources.
     - filters: Dictionary of column-value pairs to filter data *before* analysis.
       * Format: {"column_name": "value"} or {"column_name": ["val1", "val2"]}
       * **API Source Behavior:** For 'api' sources, data is fetched *first*, then filters are applied to the resulting data.
@@ -544,7 +552,10 @@ def anomaly_detection(
     - ALWAYS ask the user explicitly for all required information.
     - For CSV files: The user MUST first upload their file to statsource.me, then provide the filename.
     - For database connections: Ask the user for their exact connection string (e.g., "postgresql://user:pass@host/db"). DO NOT GUESS OR MODIFY IT.
-    - For database sources: You MUST provide the table_name parameter with the exact table name.
+    - For database sources: You MUST ask for and provide the table_name parameter with the exact table name.
+      * When a user mentions their data is in a database, ALWAYS EXPLICITLY ASK: "Which table in your database contains this data?"
+      * Tool calls without table_name will FAIL for database sources.
+      * ALWAYS include this question when gathering information from the user.
     - For API sources: Ask the user for the exact API endpoint URL that returns JSON data.
     - Never suggest default values, sample data, or example parameters - request specific information from the user.
     - If the user has configured a default database connection in their MCP config, inform them it will be used if they don't specify a data source.
@@ -592,6 +603,8 @@ def anomaly_detection(
       * Determines how `data_source` is interpreted.
       * Defaults based on MCP config if available.
     - table_name: Name of the database table (REQUIRED for database sources).
+      * Must be provided when source_type is 'database'.
+      * Always ask for table name when using database sources.
     - filters: Dictionary of column-value pairs to filter data *before* analysis.
     - options: Dictionary of additional options (less common for anomaly detection currently).
     - start_date: Inclusive start date for filtering historical data (ISO 8601 string or datetime).

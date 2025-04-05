@@ -13,7 +13,7 @@
 #   -ServerVersion <ver>  Set server version tag (default: development)
 
 param (
-    [string]$ImageName = "statsource/mcp",
+    [string]$ImageName = "jamie78933/statsource-mcp",
     [switch]$Push = $false,
     [string]$LogLevel = "",
     [string]$ApiKey = "",

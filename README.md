@@ -48,6 +48,24 @@ Suggest a new feature or improvement for the StatSource analytics platform.
 
 When using uv no specific installation is needed. We will use uvx to directly run mcp-server-stats.
 
+### Docker Support
+
+A pre-built Docker image is available on Docker Hub, which simplifies running the server. You can use this image directly without needing to build it yourself.
+
+Pull the image (optional, as `docker run` will do this automatically if the image isn't present locally):
+
+```bash
+docker pull jamie78933/statsource-mcp
+```
+
+To run the server using the Docker image:
+
+```bash
+docker run -i --rm jamie78933/statsource-mcp
+```
+
+Note: For actual usage within applications like Claude.app, refer to the Configuration section below for passing necessary environment variables like API keys and database connection strings.
+
 ### Using PIP
 
 Alternatively you can install mcp-server-stats via pip:
@@ -67,24 +85,6 @@ Or use the console script:
 ```bash
 mcp-server-stats
 ```
-
-## Docker Support
-
-A pre-built Docker image is available on Docker Hub, which simplifies running the server. You can use this image directly without needing to build it yourself.
-
-Pull the image (optional, as `docker run` will do this automatically if the image isn't present locally):
-
-```bash
-docker pull jamie78933/statsource-mcp
-```
-
-To run the server using the Docker image:
-
-```bash
-docker run -i --rm jamie78933/statsource-mcp
-```
-
-Note: For actual usage within applications like Claude.app, refer to the Configuration section below for passing necessary environment variables like API keys and database connection strings.
 
 ## Configuration
 
