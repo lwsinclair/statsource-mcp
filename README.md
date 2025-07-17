@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/jamie7893-statsource-mcp-badge.png)](https://mseep.ai/app/jamie7893-statsource-mcp)
+
 # Statsource MCP Server
 
 A Model Context Protocol server that provides statistical analysis capabilities. This server enables LLMs to analyze data from various sources, calculate statistics, and generate predictions.
